@@ -116,6 +116,12 @@ def main():
         print(f"Successfully fetched {len(emails)} emails.")
         emails.sort(key=lambda e: e.get("date", ""), reverse=True)
 
+        # Debug: print all matched email subjects
+        print("\n--- Matched email subjects ---")
+        for em in emails:
+            print(f"  [{em['date']}] {em['subject']} (from: {em['sender']})")
+        print("--- End of subjects ---\n")
+
         # Summarize with Claude
         print("Sending to Claude for summarization...")
         claude_config = config.get("claude", {})

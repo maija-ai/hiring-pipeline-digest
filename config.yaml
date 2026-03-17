@@ -21,9 +21,10 @@ gmail:
     - "screening"
     - "schedule"
     - "intro"
+    - "introduction"
 
   # How far back to search (in hours)
-  lookback_hours: 168
+  lookback_hours: 720
 
   # Maximum number of emails to fetch per run
   max_emails: 200
