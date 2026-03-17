@@ -29,11 +29,8 @@ gmail:
   # Maximum number of emails to fetch per run
   max_emails: 200
 
-# Roles currently being hired for
-roles:
-  - "Senior Backend Engineer"
-  - "Product Designer"
-  - "Engineering Manager"
+# Roles currently being hired for (leave empty to auto-discover from emails)
+roles: []
 
 # Claude API configuration
 claude:

@@ -53,7 +53,7 @@ class HiringSummarizer:
 hiring-related emails and produce a structured daily briefing for a hiring manager.
 
 Today's date is {today_str}.
-The roles currently being hired for are: {roles_str}.
+{f"The roles currently being hired for are: {roles_str}." if roles_str else "Discover all roles and companies from the email content."}
 
 Return a JSON object (no markdown fencing, just raw JSON) with this structure:
 
@@ -87,7 +87,7 @@ Return a JSON object (no markdown fencing, just raw JSON) with this structure:
 }}
 
 Rules:
-- Include ALL roles from the active roles list, even if no activity. Set counts to 0 and note "No recent activity".
+- If a roles list is provided, include all of them. Otherwise, discover roles and companies from the email content. Only include roles that appear in the emails.
 - Extract the company name from email threads (e.g., "Mark / Soldera intro" means the company is Soldera). Always include the company name for each role.
 - For pipeline counts, infer the stage from email context (e.g., "scheduled interview" = interviewing stage).
 - Action items should be specific and actionable. Flag anything needing a reply, decision, or with a deadline.
