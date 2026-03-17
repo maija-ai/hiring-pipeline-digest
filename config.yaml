@@ -1,0 +1,44 @@
+# Gmail search configuration
+gmail:
+  # Gmail label names to search within (optional, can be empty)
+  labels:
+    - "Hiring"
+    - "Recruiting"
+
+  # Sender patterns to match (OR logic)
+  sender_patterns:
+    - "@juicebox.ai"
+    - "@greenhouse.io"
+    - "@lever.co"
+    - "@linkedin.com"
+
+  # Subject line keywords (OR logic)
+  subject_keywords:
+    - "interview"
+    - "candidate"
+    - "application"
+    - "offer"
+    - "screening"
+    - "schedule"
+    - "intro"
+
+  # How far back to search (in hours)
+  lookback_hours: 48
+
+  # Maximum number of emails to fetch per run
+  max_emails: 200
+
+# Roles currently being hired for
+roles:
+  - "Senior Backend Engineer"
+  - "Product Designer"
+  - "Engineering Manager"
+
+# Claude API configuration
+claude:
+  model: "claude-sonnet-4-20250514"
+  max_tokens: 4096
+
+# Email output configuration
+email:
+  subject_prefix: "[Hiring Digest]"
