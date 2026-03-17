@@ -56,6 +56,7 @@ def main():
         subject_keywords=gmail_config.get("subject_keywords", []),
         after_date=after_date,
     )
+    print(f"Lookback: {lookback_hours} hours, after_date: {after_date}")
     print(f"Gmail search query: {query}")
 
     # Search by query patterns
@@ -87,7 +88,7 @@ def main():
     if not all_message_ids:
         print("No hiring emails found. Sending minimal digest.")
         summary = {
-            "overall_summary": "No hiring-related emails were found in the last 48 hours.",
+            "overall_summary": f"No hiring-related emails were found in the last {lookback_hours} hours.",
             "pipeline_summary": [
                 {
                     "role": r,
