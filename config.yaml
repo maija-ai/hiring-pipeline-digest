@@ -23,7 +23,7 @@ gmail:
     - "intro"
 
   # How far back to search (in hours)
-  lookback_hours: 48
+  lookback_hours: 168
 
   # Maximum number of emails to fetch per run
   max_emails: 200

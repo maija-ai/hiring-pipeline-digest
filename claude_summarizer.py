@@ -62,6 +62,7 @@ Return a JSON object (no markdown fencing, just raw JSON) with this structure:
   "pipeline_summary": [
     {{
       "role": "Role Name",
+      "company": "Company Name",
       "sourced": 0,
       "contacted": 0,
       "interviewing": 0,
@@ -87,6 +88,7 @@ Return a JSON object (no markdown fencing, just raw JSON) with this structure:
 
 Rules:
 - Include ALL roles from the active roles list, even if no activity. Set counts to 0 and note "No recent activity".
+- Extract the company name from email threads (e.g., "Mark / Soldera intro" means the company is Soldera). Always include the company name for each role.
 - For pipeline counts, infer the stage from email context (e.g., "scheduled interview" = interviewing stage).
 - Action items should be specific and actionable. Flag anything needing a reply, decision, or with a deadline.
 - Mark action items "high" priority if they involve: interviews today/tomorrow, expiring offers, overdue responses.

@@ -91,6 +91,7 @@ def main():
             "pipeline_summary": [
                 {
                     "role": r,
+                    "company": "",
                     "sourced": 0,
                     "contacted": 0,
                     "interviewing": 0,

@@ -35,7 +35,7 @@
             </tr>
             {% for role in summary.pipeline_summary %}
             <tr style="border-bottom:1px solid #eee;">
-              <td style="padding:10px 8px; font-weight:600;">{{ role.role }}</td>
+              <td style="padding:10px 8px; font-weight:600;">{{ role.role }}{% if role.company %} <span style="font-weight:400; color:#666;">@ {{ role.company }}</span>{% endif %}</td>
               <td align="center">{{ role.sourced }}</td>
               <td align="center">{{ role.contacted }}</td>
               <td align="center">{{ role.interviewing }}</td>
