@@ -89,20 +89,8 @@ def main():
         print("No hiring emails found. Sending minimal digest.")
         summary = {
             "overall_summary": f"No hiring-related emails were found in the last {lookback_hours} hours.",
-            "pipeline_summary": [
-                {
-                    "role": r,
-                    "company": "",
-                    "sourced": 0,
-                    "contacted": 0,
-                    "interviewing": 0,
-                    "offered": 0,
-                    "notes": "No recent activity",
-                }
-                for r in roles
-            ],
-            "action_items": [],
-            "recent_activity": [],
+            "roles": [],
+            "general_todos": [],
         }
     else:
         # Fetch full email content

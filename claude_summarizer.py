@@ -59,46 +59,52 @@ Return a JSON object (no markdown fencing, just raw JSON) with this structure:
 
 {{
   "overall_summary": "2-3 sentence executive summary of hiring activity",
-  "pipeline_summary": [
+  "roles": [
     {{
       "role": "Role Name",
       "company": "Company Name",
-      "sourced": 0,
-      "contacted": 0,
-      "interviewing": 0,
-      "offered": 0,
-      "notes": "Brief notes about this role's pipeline"
+      "emails": [
+        {{
+          "subject": "Email subject line",
+          "date": "Date",
+          "summary": "1-2 sentence summary of what this email is about"
+        }}
+      ],
+      "todos": [
+        {{
+          "priority": "high|medium|low",
+          "description": "What needs to be done",
+          "deadline": "When it needs to happen or null"
+        }}
+      ]
     }}
   ],
-  "action_items": [
+  "general_todos": [
     {{
       "priority": "high|medium|low",
-      "description": "What needs to be done",
-      "deadline": "When it needs to happen"
-    }}
-  ],
-  "recent_activity": [
-    {{
-      "timestamp": "Approximate date/time",
-      "description": "What happened",
-      "source": "Which email or platform this came from"
+      "description": "Action items not tied to a specific role",
+      "deadline": "When it needs to happen or null"
     }}
   ]
 }}
 
 Rules:
+- Group emails by role and company. Extract the company name from email threads (e.g., "Mark / Soldera intro" means the company is Soldera).
 - If a roles list is provided, include all of them. Otherwise, discover roles and companies from the email content. Only include roles that appear in the emails.
-- Extract the company name from email threads (e.g., "Mark / Soldera intro" means the company is Soldera). Always include the company name for each role.
-- For pipeline counts, infer the stage from email context (e.g., "scheduled interview" = interviewing stage).
-- Action items should be specific and actionable. Flag anything needing a reply, decision, or with a deadline.
-- Mark action items "high" priority if they involve: interviews today/tomorrow, expiring offers, overdue responses.
-- recent_activity should be in reverse chronological order (newest first).
-- If you cannot determine exact counts, provide your best estimate and note the uncertainty.
+- For each role, list the relevant emails with a brief summary of each.
+- For each role, list actionable to-dos based on the emails.
+- CRITICAL: Before adding a to-do, check whether it has ALREADY BEEN DONE. Look at the full email thread context:
+  - If someone requested scheduling and a confirmation/reply already exists, do NOT add "schedule interview" as a to-do.
+  - If a follow-up was requested and a response already exists in the thread, do NOT add "respond to X" as a to-do.
+  - If an intro was made and both parties have already connected, do NOT add "make intro" as a to-do.
+  - Only include to-dos for things that genuinely still need action as of today.
+- Mark to-dos "high" priority if they involve: interviews today/tomorrow, expiring offers, overdue responses with no reply.
+- general_todos is for action items not tied to a specific role (e.g., recruiter meetings, platform admin tasks).
 - If an email is not related to hiring, skip it entirely.
-- Do not fabricate information. If data is ambiguous, say so in the notes."""
+- Do not fabricate information. If data is ambiguous, say so."""
 
     def _user_prompt(self, email_text: str) -> str:
-        return f"""Here are the hiring-related emails from the last 24-48 hours. \
+        return f"""Here are the hiring-related emails from the last 48 hours. \
 Analyze them and produce the structured JSON briefing.
 
 {email_text}
@@ -116,8 +122,7 @@ Return only the JSON object, no other text."""
         except json.JSONDecodeError:
             return {
                 "overall_summary": "Failed to parse structured response. Raw output included below.",
-                "pipeline_summary": [],
-                "action_items": [],
-                "recent_activity": [],
+                "roles": [],
+                "general_todos": [],
                 "_raw_response": text,
             }

@@ -2,8 +2,8 @@ name: Daily Hiring Pipeline Digest
 
 on:
   schedule:
-    # Weekday mornings at 12:30 UTC (~7:30 AM EST / 8:30 AM EDT)
-    - cron: '30 12 * * 1-5'
+    # Weekday mornings at 7:00 UTC (9:00 AM EET / 10:00 AM EEST)
+    - cron: '0 7 * * 1-5'
   workflow_dispatch:
     inputs:
       lookback_override:
